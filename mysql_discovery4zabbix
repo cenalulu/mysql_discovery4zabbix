@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Data::Dumper
+use Data::Dumper;
 use JSON;
 
 my $SINGLE_MYSQL_DATADIR='/data/mysql/';
