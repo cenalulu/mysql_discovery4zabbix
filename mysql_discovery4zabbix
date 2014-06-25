@@ -2,7 +2,6 @@
 
 use strict;
 use warnings;
-use Data::Dumper;
 use JSON;
 
 my $SINGLE_MYSQL_DATADIR='/data/mysql/';
@@ -31,8 +30,6 @@ if( -d $SINGLE_MYSQL_DATADIR ){
         }
     }
 }
-
-print Dumper($json_ref);
 
 my $json_str = $json_obj->pretty->encode($json_ref);
 print $json_str;
