@@ -7,6 +7,7 @@ use JSON;
 
 my $SINGLE_MYSQL_DATADIR='/data/mysql/';
 my $MULTI_MYSQL_DATADIR_PREFIX='/data/';
+my $json_obj = JSON->new;
 my @data_array=();
 my $json_ref;
 $json_ref->{data}=\@data_array;
@@ -33,5 +34,5 @@ if( -d $SINGLE_MYSQL_DATADIR ){
 
 print Dumper($json_ref);
 
-my $json_str=json_encode($json_ref);
+my $json_str = $json_obj->pretty->encode($json_ref);
 print $json_str;
