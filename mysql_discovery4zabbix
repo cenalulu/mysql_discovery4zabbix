@@ -33,3 +33,5 @@ if( -d $SINGLE_MYSQL_DATADIR ){
 
 print Dumper($json_ref);
 
+my $json_str=json_encode($json_ref);
+print $json_str;
