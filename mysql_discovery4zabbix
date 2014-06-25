@@ -1,0 +1,54 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+use Data::Dumper
+use JSON;
+
+my $SINGLE_MYSQL_DATADIR='/data/mysql/';
+my $MULTI_MYSQL_DATADIR_PREFIX='/data/';
+my $json_ref={ 'data'=> 
+                []
+               } ;
+
+
+
+if( -d $SINGLE_MYSQL_DATADIR ){
+    my %mysql_info;
+    $mysql_info{'{#MYSQLPORT}'}=3306;
+    $mysql_info{'{#SOCKET}'}='/data/mysql/mysql.sock';
+    push( $json_ref->{data}, $mysql_info );
+}else{
+    for( my $port=3306, $port<3320, $port++ ){
+        my $dir_name = $MULTI_MYSQL_DATADIR_PREFIX."/data${port}/mysql";
+        if( -d $dir_name ){
+            my %mysql_info;
+            $mysql_info{'{#MYSQLPORT}'}=$port;
+            $mysql_info{'{#SOCKET}'}   =$dir_name."/mysql.sock";
+            push( $json_ref->{data}, $mysql_info );
+        }
+    }
+}
+
+print Dumper($json_ref);
+
+
+
+print '{
+	"data":[
+		{
+			"{#MYSQLPORT}":"3306",
+			"{#SOCKET}":"/data/mysql/mysql.sock",
+		},
+		{
+			"{#MYSQLPORT}":"3307",
+			"{#SOCKET}":"/data/mysql/mysql.sock",
+		},
+		{
+			"{#MYSQLPORT}":"3308",
+			"{#SOCKET}":"/data/mysql/mysql.sock",
+		},
+]
+}';
+
+
