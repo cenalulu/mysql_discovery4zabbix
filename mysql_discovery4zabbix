@@ -7,9 +7,8 @@ use JSON;
 
 my $SINGLE_MYSQL_DATADIR='/data/mysql/';
 my $MULTI_MYSQL_DATADIR_PREFIX='/data/';
-my $json_ref={ 'data'=> 
-                []
-               } ;
+my @data_array=();
+$json_ref->{data}=\@data_array;
 
 
 
