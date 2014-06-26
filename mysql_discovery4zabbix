@@ -28,11 +28,12 @@ if( -d $SINGLE_MYSQL_DATADIR ){
                 $is_server_section=1;
             }
             if( $is_server_section==1 ){
-                if( $_ =~ /port\S*=\S*(\d+)/ ){
+                if( $_ =~ /port\s*=\s*(\d+)/ ){
                     $mysql_info{'{#MYSQLPORT}'}=$1;
                 }
             }
         }
+        close($fh);
     }
     push( @{$json_ref->{data}}, \%mysql_info );
 }else{
