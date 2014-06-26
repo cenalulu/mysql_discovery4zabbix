@@ -15,9 +15,25 @@ $json_ref->{data}=\@data_array;
 
 
 if( -d $SINGLE_MYSQL_DATADIR ){
+    #it's typical sinale instance mysql
+    #but we need to ensure MySQL port is 3306
     my %mysql_info;
     $mysql_info{'{#MYSQLPORT}'}=3306;
     $mysql_info{'{#SOCKET}'}='/data/mysql/mysql.sock';
+    if( -e '/etc/my.cnf' ){
+        my $is_server_section=0;
+        open(my $fh,'< /etc/my.cnf') or die '';
+        while( <$fh> ){
+            if( $_ =~ /\[mysqld\]/ ){
+                $is_server_section=1;
+            }
+            if( $is_server_section==1 ){
+                if( $_ =~ /port\S*=\S*(\d+)/ ){
+                    $mysql_info{'{#MYSQLPORT}'}=$1;
+                }
+            }
+        }
+    }
     push( @{$json_ref->{data}}, \%mysql_info );
 }else{
     for( my $port=3306; $port<3320; $port++ ){
